@@ -158,9 +158,6 @@
             <activation>
                 <property><name>!spark1.2</name></property>
             </activation>
-	    <modules>
-	      <module>streambench</module>
-	    </modules>
 
         </profile>
         <profile>
@@ -173,9 +170,6 @@
             <activation>
                 <property><name>spark1.4</name></property>
             </activation>
-	    <modules>
-	      <module>streambench</module>
-	    </modules>
 
         </profile>
 	<profile>
@@ -188,9 +182,6 @@
             <activation>
                 <property><name>spark1.5</name></property>
             </activation>
-	    <modules>
-	      <module>streambench</module>
-	    </modules>
 
         </profile>
     </profiles>

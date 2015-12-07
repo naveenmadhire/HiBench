@@ -18,27 +18,45 @@
 
 package org.apache.hadoop.fs.dfsioe;
 
-import java.io.*;
-
-import java.util.Date;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.StringTokenizer;
 
-import org.apache.commons.logging.*;
-
-import org.apache.hadoop.mapred.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.dfsioe.Analyzer._Mapper;
+import org.apache.hadoop.fs.dfsioe.Analyzer._Reducer;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.SequenceFile;
+import org.apache.hadoop.io.SequenceFile.CompressionType;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.FileInputFormat;
+import org.apache.hadoop.mapred.FileOutputFormat;
+import org.apache.hadoop.mapred.JobClient;
+import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.Mapper;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapred.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.io.SequenceFile.CompressionType;
-import org.apache.hadoop.conf.*;
-import org.apache.hadoop.fs.*;
-import org.apache.hadoop.fs.dfsioe.Analyzer._Mapper;
-import org.apache.hadoop.fs.dfsioe.Analyzer._Reducer;
 
 /**
  * Enhanced Distributed i/o benchmark.
@@ -567,7 +585,15 @@ public class TestDFSIOEnh extends Configured implements Tool {
     try {
 
         Configuration fsConfig = new Configuration(getConf());
-
+        
+        TEST_ROOT_DIR = fsConfig.get("test.build.data","/benchmarks/TestDFSIO-Enh");
+        CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
+        WRITE_DIR = new Path(TEST_ROOT_DIR, "io_write");
+        READ_DIR = new Path(TEST_ROOT_DIR, "io_read");
+        DATA_DIR = new Path(TEST_ROOT_DIR, "io_data");
+        REPORT_DIR = new Path(TEST_ROOT_DIR, "reports");
+        REPORT_TMP = new Path(TEST_ROOT_DIR, "_merged_reports.txt");
+        
         fsConfig.setInt("test.io.file.buffer.size", bufferSize);
         fsConfig.setInt("test.io.sampling.interval",tputSampleInterval);
  
@@ -1136,5 +1162,6 @@ public class TestDFSIOEnh extends Configured implements Tool {
 	 }
 
 }//end 
+
 
 

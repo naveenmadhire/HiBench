@@ -455,7 +455,9 @@ def generate_optional_value():  # get some critical values from environment or m
                         HibenchConf['hibench.masters.hostnames'] = resourcemanager_hostname
                         HibenchConfRef['hibench.masters.hostnames'] = "Parsed from "+ yarn_site_file
 		    else:
-                        assert 0, "Unknown resourcemanager, please check `hibench.hadoop.configure.dir` and \"yarn-site.xml\" file"
+                        HibenchConf['hibench.masters.hostnames'] = "master2"
+                        HibenchConfRef['hibench.masters.hostnames'] = "Parsed from "+ yarn_site_file
+                        #assert 0, "Unknown resourcemanager, please check `hibench.hadoop.configure.dir` and \"yarn-site.xml\" file"
             except Exception as e:
                 assert 0, "Get workers from yarn web UI page failed, reason:%s\nplease set `hibench.masters.hostnames` and `hibench.slaves.hostnames` manually" % e
 

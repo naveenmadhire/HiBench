@@ -3,13 +3,13 @@
 #======================================================
 
 # Hadoop home
-hibench.hadoop.home		/PATH/TO/YOUR/HADOOP/ROOT
+hibench.hadoop.home		/opt/hadoop/
 
 # Spark home
-hibench.spark.home		/PATH/TO/YOUR/SPARK/ROOT
+hibench.spark.home		/opt/spark/
 
 # HDFS master, set according to hdfs-site.xml
-hibench.hdfs.master		hdfs://HOSTNAME:HDFSPORT
+hibench.hdfs.master		10.0.3.197:50070
 
 # Spark master
 #   standalone mode: `spark://xxx:7077`

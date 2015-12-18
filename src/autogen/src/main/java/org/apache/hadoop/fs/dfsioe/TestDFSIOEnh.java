@@ -111,7 +111,7 @@ public class TestDFSIOEnh extends Configured implements Tool {
   private static final String BASE_FILE_NAME = "test_io_";
   private static final String DEFAULT_RES_FILE_NAME = "TestDFSIOEnh_results.log";
 
-  private static String TEST_ROOT_DIR = System.getProperty("test.build.data","/benchmarks/TestDFSIO-Enh");
+  private static String TEST_ROOT_DIR = System.getProperty("test.build.data","/user/vmadhire/benchmarks/TestDFSIO-Enh");
   private static Configuration fsConfig = new Configuration();
   private static Path CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
   protected static Path WRITE_DIR = new Path(TEST_ROOT_DIR, "io_write");
@@ -584,15 +584,20 @@ public class TestDFSIOEnh extends Configured implements Tool {
   
     try {
 
-        Configuration fsConfig = new Configuration(getConf());
-        
-        TEST_ROOT_DIR = fsConfig.get("test.build.data","/benchmarks/TestDFSIO-Enh");
+        //Configuration fsConfig = new Configuration(getConf());
+        Configuration fsConfig = new Configuration();
+        TEST_ROOT_DIR = fsConfig.get("test.build.data","/user/vmadhire/benchmarks/TestDFSIO-Enh");
+        //TEST_ROOT_DIR = fsConfig.get("test.build.data");
         CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
         WRITE_DIR = new Path(TEST_ROOT_DIR, "io_write");
         READ_DIR = new Path(TEST_ROOT_DIR, "io_read");
         DATA_DIR = new Path(TEST_ROOT_DIR, "io_data");
         REPORT_DIR = new Path(TEST_ROOT_DIR, "reports");
         REPORT_TMP = new Path(TEST_ROOT_DIR, "_merged_reports.txt");
+        
+        
+        fsConfig.addResource(new Path("/opt/hadoop/etc/hadoop/core-site.xml"));
+        fsConfig.addResource(new Path("/opt/hadoop/etc/hadoop/hdfs-site.xml"));
         
         fsConfig.setInt("test.io.file.buffer.size", bufferSize);
         fsConfig.setInt("test.io.sampling.interval",tputSampleInterval);
